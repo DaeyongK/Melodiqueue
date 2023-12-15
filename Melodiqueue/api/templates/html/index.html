@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    {% load socialaccount %}
+    <h1>Please log in with Google</h1>
+    <a href="{% provider_login_url 'google' %}?next=/main">Login With Google</a>
+</body>
+</html>

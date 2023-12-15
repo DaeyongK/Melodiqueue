@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
-# Create your views here.
+def index(request):
+    return render(request, "index.html")
+
 def main(request):
-    return HttpResponse("Hello")
+    return render(request, "main.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
+
+

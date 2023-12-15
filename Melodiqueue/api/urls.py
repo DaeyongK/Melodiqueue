@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import main
+from django.urls import path, include
+from . import views
 urlpatterns = [
-    path('home', main),
-    path('', main)
+    path('', views.index),
+    path('main', views.main),
+    path('logout', views.logout_view),
 ]

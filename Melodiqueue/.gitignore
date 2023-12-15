@@ -1,6 +1,3 @@
-.DS_Store
-/melodiqueue-env/
-db.sqlite3
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

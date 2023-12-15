@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+    <p>You are signed in as {{user.email}} </p>
+    <a href="logout">Logout</a>
+    {% endif %}
+    <p>ALSO, Daeyong wants you to know that you are VERY special to him! :)</p>
+</body>
+</html>
