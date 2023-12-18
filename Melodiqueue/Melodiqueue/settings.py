@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import boto3
 from botocore.exceptions import ClientError
-import os
+import mimetypes
+
+mimetypes.add_type("text/css", ".css", True)
 
 def get_secret(sn):
 
@@ -47,7 +49,7 @@ SECRET_KEY = get_secret("Django-Secret-Key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['melodiqueue-dev.us-east-1.elasticbeanstalk.com', '127.0.0.1']
+ALLOWED_HOSTS = ['melodiqueue-dev.us-east-1.elasticbeanstalk.com', '127.0.0.1', '172.31.43.243']
 
 
 # Application definition
@@ -163,14 +165,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/var/app/current/static/'
+AWS_EB_EXTENSIONS = [
+    {
+        'option_name': 'aws:elasticbeanstalk:container:python',
+        'option_value': 'custom_nginx.config',
+    },
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_DIRS = [BASE_DIR / 'api/static']
+# STATICFILES_DIRS = []
                     
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
