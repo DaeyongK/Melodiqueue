@@ -49,7 +49,7 @@ SECRET_KEY = get_secret("Django-Secret-Key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['melodiqueue-dev.us-east-1.elasticbeanstalk.com', '127.0.0.1', '172.31.43.243']
+ALLOWED_HOSTS = ['melodiqueue-dev.us-east-1.elasticbeanstalk.com', 'quereadai.click', '127.0.0.1', '172.31.43.243']
 
 
 # Application definition
@@ -145,10 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -166,13 +162,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/var/app/current/static/'
-AWS_EB_EXTENSIONS = [
-    {
-        'option_name': 'aws:elasticbeanstalk:container:python',
-        'option_value': 'custom_nginx.config',
-    },
-]
+STATIC_ROOT = 'static'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
