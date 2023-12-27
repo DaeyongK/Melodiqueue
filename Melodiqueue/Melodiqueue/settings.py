@@ -11,14 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import json
 import boto3
 from botocore.exceptions import ClientError
-import mimetypes
 
-mimetypes.add_type("text/css", ".css", True)
 
-def get_secret(sn):
-
+def get_secret(sn, key):
     secret_name = sn
     region_name = "us-east-1"
 
@@ -35,7 +33,17 @@ def get_secret(sn):
     except ClientError as e:
         raise e
 
-    return get_secret_value_response['SecretString']
+    secret_string = get_secret_value_response['SecretString']
+    
+    try:
+        # Try to parse the JSON string
+        secret_dict = json.loads(secret_string)
+        # Return the value associated with 'SECRET_KEY' key
+        return secret_dict.get(key)
+    except json.JSONDecodeError:
+        # If parsing fails, return the original string
+        return secret_string
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,13 +52,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("Django-Secret-Key")
+SECRET_KEY = get_secret("Django-Secret-Key", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['melodiqueue-dev.us-east-1.elasticbeanstalk.com', 'quereadai.click', '127.0.0.1', '172.31.43.243']
-
+ALLOWED_HOSTS = ['melodiqueue-dev.eba-gabihe3m.us-east-1.elasticbeanstalk.com', 'quereadai.click', '127.0.0.1']
 
 # Application definition
 SITE_ID = 1
@@ -78,8 +85,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': get_secret("OAuth")[18:90],
-            'secret': get_secret("OAuth")[113:-2],
+            'client_id': get_secret("OAuth", "OAuthClientID"),
+            'secret': get_secret("OAuth", "OAuthClientSecret")
         }
     }
 }
@@ -126,6 +133,8 @@ DATABASES = {
     }
 }
 
+# Use cached sessions
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -169,7 +178,6 @@ STATIC_ROOT = 'static'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# STATICFILES_DIRS = []
                     
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -177,3 +185,4 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIALACCOUNT_LOGIN_ON_GET=True
+SECURE_SSL_REDIRECT=False
