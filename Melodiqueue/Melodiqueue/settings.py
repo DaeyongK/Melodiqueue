@@ -36,12 +36,9 @@ def get_secret(sn, key):
     secret_string = get_secret_value_response['SecretString']
     
     try:
-        # Try to parse the JSON string
         secret_dict = json.loads(secret_string)
-        # Return the value associated with 'SECRET_KEY' key
         return secret_dict.get(key)
     except json.JSONDecodeError:
-        # If parsing fails, return the original string
         return secret_string
 
 
