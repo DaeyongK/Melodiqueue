@@ -87,7 +87,9 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': get_secret("OAuth", "OAuthClientID"),
             'secret': get_secret("OAuth", "OAuthClientSecret")
-        }
+        },
+        'SCOPE': ['openid', 'profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'}, 
     }
 }
 
