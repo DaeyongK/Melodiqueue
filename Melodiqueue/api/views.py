@@ -45,6 +45,9 @@ def main(request):
 def delete_file(request):
     if request.method == 'POST':
         filename = request.POST.get('filename')
+        pdfname_collection = chroma_client.get_or_create_collection(name=request.session["id"]+"pdf")
+        collection = chroma_client.get_or_create_collection(name=request.session["id"], embedding_function=openai_embed_function)
+        delete_embeddings(pdfname_collection, collection, filename)
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False})
@@ -54,8 +57,6 @@ def logout_view(request):
     return redirect("/")
 
 def generate_response(request, user_input):
-    collection = chroma_client.get_or_create_collection(name=request.session["id"], embedding_function=openai_embed_function)
-    pdfname_collection = chroma_client.get_or_create_collection(name=request.session["id"]+"pdf")
     query = str(unquote(user_input))
     result = respond(chroma_client, request.session["id"], query)
     return JsonResponse({'result': result})
