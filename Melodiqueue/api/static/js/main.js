@@ -22,18 +22,15 @@ function sendMessage() {
     userMessage.innerText = userInput;
     chatBox.appendChild(userMessage);
     const encodedUserInput = `/generate_response/`+ encodeURIComponent(encodeURIComponent(userInput));
-
     var result = "";
     fetch(encodedUserInput)
         .then(response => response.json())
         .then(data => {
             result = data.result;
-
             const botMessage = document.createElement('div');
             botMessage.className = 'container message bot-message';
             botMessage.innerText = `${result}`;
             chatBox.appendChild(botMessage);
-
             chatBox.scrollTop = chatBox.scrollHeight;
         })
         .catch(error => console.error('Error:', error));

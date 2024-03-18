@@ -33,7 +33,7 @@ function sendMessage() {
             botMessage.className = 'container message bot-message';
             botMessage.innerText = `${result}`;
             chatBox.appendChild(botMessage);
-
+            
             chatBox.scrollTop = chatBox.scrollHeight;
         })
         .catch(error => console.error('Error:', error));

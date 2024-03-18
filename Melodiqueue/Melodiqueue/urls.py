@@ -22,3 +22,6 @@ urlpatterns = [
     path('', include('api.urls')),
     path('accounts/', include('allauth.urls')),
 ]
+
+handler404 = 'api.views.handler404'
+handler500 = 'api.views.handler500'

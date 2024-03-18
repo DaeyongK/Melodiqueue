@@ -33,7 +33,7 @@ def respond(chroma_client, collection_name, message):
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     custom_func = OpenAIEmbeddings()
     vectorchrom = Chroma(client=chroma_client, collection_name=collection_name, embedding_function=custom_func)
-    qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0), vectorchrom.as_retriever(), memory=memory)
+    qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0, max_tokens=1024), vectorchrom.as_retriever(), memory=memory)
     return qa.run(message)
 
 def get_secret(sn, key):

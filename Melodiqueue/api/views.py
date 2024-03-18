@@ -60,3 +60,10 @@ def generate_response(request, user_input):
     query = str(unquote(user_input))
     result = respond(chroma_client, request.session["id"], query)
     return JsonResponse({'result': result})
+
+def handler404(request, *args, **argv):
+    return render(request, "error.html", {"error_message": "We couldn't find your page! Try navigating through Queread through our given interface."})
+
+def handler500(request, *args, **argv):
+    return render(request, "error.html", {"error_message": "There seems to have been an internal server error. If the issue continues, please contact the site admin!"})
+

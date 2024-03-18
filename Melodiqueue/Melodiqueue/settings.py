@@ -52,7 +52,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = get_secret("Django-Secret-Key", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['melodiqueue-dev.eba-gabihe3m.us-east-1.elasticbeanstalk.com', 'quereadai.click', '127.0.0.1']
 
@@ -185,3 +185,6 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIALACCOUNT_LOGIN_ON_GET=True
 SECURE_SSL_REDIRECT=False
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760 * 5  # 50 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760 * 5  # 50 MB

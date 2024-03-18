@@ -1,0 +1,14 @@
+body {
+    background-color: #FEFAD4;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh;
+}
+
+.header {
+    font-family: 'Roboto', sans-serif;
+    color: #765D69;
+    font-size: 5vh;
+}
